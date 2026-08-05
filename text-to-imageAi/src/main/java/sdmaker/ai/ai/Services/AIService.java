@@ -1,50 +1,69 @@
 package sdmaker.ai.ai.Services;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import java.util.Map;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class AIService {
 
     private final RestClient restClient;
 
-    @Value("${huggingface.api.key}")
-    private String apiKey;
+    @Value("${pollinations.base-url}")
+    private String baseUrl;
 
-    @Value("${huggingface.model}")
+    @Value("${pollinations.model}")
     private String model;
 
-    @Value("${huggingface.base-url}")
-    private String baseUrl;
+    @Value("${pollinations.width}")
+    private int width;
+
+    @Value("${pollinations.height}")
+    private int height;
+
+    @Value("${pollinations.seed}")
+    private int seed;
 
     public AIService(RestClient restClient) {
         this.restClient = restClient;
     }
 
     public byte[] generateImage(String prompt) {
-        // Clean URL construction
-        String endpoint = baseUrl.endsWith("/") ? baseUrl + model : baseUrl + "/" + model;
 
         try {
-            return restClient.post()
-                    .uri(endpoint)
-                    .header("Authorization", "Bearer " + apiKey)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    // Using a Map ensures the JSON is formatted perfectly
-                    .body(Map.of("inputs", prompt))
+
+            // Encode the prompt for a valid URL
+            String encodedPrompt = URLEncoder.encode(prompt, StandardCharsets.UTF_8);
+
+            // Build the Pollinations URL
+            String imageUrl = String.format(
+                    "%s%s?model=%s&width=%d&height=%d&seed=%d",
+                    baseUrl,
+                    encodedPrompt,
+                    model,
+                    width,
+                    height,
+                    seed
+            );
+
+            System.out.println("Generating image from:");
+            System.out.println(imageUrl);
+
+            return restClient.get()
+                    .uri(imageUrl)
                     .retrieve()
-                    .onStatus(status -> status.value() == 503, (request, response) -> {
-                        throw new RuntimeException("Model is loading. Try again in 20 seconds.");
-                    })
                     .body(byte[].class);
+
         } catch (Exception e) {
-            // This will print the exact error to your IntelliJ console
-            System.err.println("CRITICAL ERROR: " + e.getMessage());
+
+            System.err.println("========== POLLINATIONS ERROR ==========");
             e.printStackTrace();
-            throw new RuntimeException("AI failed: " + e.getMessage());
+            System.err.println("========================================");
+
+            throw new RuntimeException("Failed to generate image: " + e.getMessage());
         }
     }
 }

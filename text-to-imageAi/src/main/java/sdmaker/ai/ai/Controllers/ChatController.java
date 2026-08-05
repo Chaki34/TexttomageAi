@@ -1,11 +1,11 @@
 package sdmaker.ai.ai.Controllers;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import sdmaker.ai.ai.Services.AIService;
 
 @Controller
@@ -18,28 +18,32 @@ public class ChatController {
     }
 
     @GetMapping("/")
-    public String home(Model model) {
-        return "index"; // Looks for index.html in templates
+    public String home() {
+        return "index";
     }
 
-    @PostMapping(value = "/chat")
+    @PostMapping("/chat")
     public ResponseEntity<byte[]> chat(@RequestParam String prompt) {
+
         try {
-            // Call the service to get the image bytes
+
+            System.out.println("Prompt Received: " + prompt);
+
             byte[] imageBytes = aiService.generateImage(prompt);
 
-            // Return the bytes with the correct Content-Type header
+            System.out.println("Image Generated Successfully.");
+
             return ResponseEntity.ok()
                     .contentType(MediaType.IMAGE_PNG)
                     .body(imageBytes);
 
-        } catch (RuntimeException e) {
-            // If the model is loading or there's an error,
-            // return a 503 Service Unavailable or 500 Internal Error
-            System.err.println("Controller Error: " + e.getMessage());
+        } catch (Exception e) {
 
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
-                    .body(null);
+            System.err.println("========== CONTROLLER ERROR ==========");
+            e.printStackTrace();
+            System.err.println("======================================");
+
+            return ResponseEntity.internalServerError().build();
         }
     }
 }
