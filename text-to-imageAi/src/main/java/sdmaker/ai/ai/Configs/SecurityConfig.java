@@ -18,17 +18,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disabled for simplicity with the /chat AJAX
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register", "/login", "/css/**", "/js/**", "/h2-console/**").permitAll()
+                        // Public pages
+                        .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/h2-console/**").permitAll()
+                        // Everything else (including /studio and /chat) requires login
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
+                        // SUCCESS REDIRECT: Send user to the Studio Dashboard
+                        .defaultSuccessUrl("/studio", true)
                         .permitAll()
                 )
-                .logout(logout -> logout.logoutSuccessUrl("/login?logout").permitAll());
+                .logout(logout -> logout.logoutSuccessUrl("/").permitAll()); // Redirect to landing on logout
 
         // Needed for H2 Console
         http.headers(headers -> headers.frameOptions(frame -> frame.disable()));

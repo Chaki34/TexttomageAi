@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus AI | The Future of Generation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+
+        :root {
+            --g-blue: #4285F4; --g-red: #EA4335; --g-yellow: #FBBC05; --g-green: #34A853;
+            --google-gradient: linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #34A853);
+        }
+
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; color: #1a1a1a; scroll-behavior: smooth; }
+        .serif { font-family: 'Playfair Display', serif; }
+
+        #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; pointer-events: none; }
+
+        .google-strap { height: 4px; width: 100%; background: var(--google-gradient); }
+
+        .floating { animation: floating 4s ease-in-out infinite; }
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        .btn-black { background: #000; color: #fff; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .btn-black:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 20px 30px -10px rgba(0,0,0,0.2); }
+
+        .trust-logo { filter: grayscale(100%); opacity: 0.4; transition: 0.3s; height: 24px; }
+        .trust-logo:hover { filter: grayscale(0%); opacity: 1; }
+
+        .feature-card { transition: all 0.3s; border: 1px solid rgba(0,0,0,0.05); }
+        .feature-card:hover { transform: translateY(-10px); background: #fff; border-color: #4285F4; box-shadow: 0 30px 60px -20px rgba(0,0,0,0.1); }
+
+        .gallery-item { position: relative; border-radius: 20px; overflow: hidden; break-inside: avoid; margin-bottom: 1.5rem; }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+<!-- Three.js Background -->
+<div id="canvas-container"></div>
+
+<!-- Multi-color top strap -->
+<div class="google-strap"></div>
+
+<!-- Navigation -->
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <div class="flex items-center justify-between px-10 py-5 max-w-7xl mx-auto">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-black rounded-xl flex items-center justify-center rotate-3">
+                <i class="fas fa-wand-sparkles text-white"></i>
+            </div>
+            <span class="font-extrabold text-xl tracking-tighter">NEXUS<span class="text-blue-600">AI</span></span>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-10 text-sm font-semibold text-gray-500">
+            <a href="#features" class="hover:text-blue-600 transition-colors">Platform</a>
+            <a href="#gallery" class="hover:text-blue-600 transition-colors">Showcase</a>
+            <a href="#" class="hover:text-blue-600 transition-colors">Enterprise</a>
+            <a href="#" class="hover:text-blue-600 transition-colors">Pricing</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <a th:href="@{/login}" class="hidden sm:block text-sm font-bold text-gray-700">Log In</a>
+            <a th:href="@{/register}" class="btn-black px-7 py-3 rounded-full text-sm font-bold">Start Generating</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="relative pt-24 pb-20 text-center max-w-5xl mx-auto px-6 z-10">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold mb-8 uppercase tracking-widest">
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
+            </span>
+        Next-Gen Flux.1 dev Engine
+    </div>
+    <h1 class="text-7xl md:text-8xl serif mb-8 leading-[1.05] tracking-tight text-slate-900">
+        Generate your <br> <span class="italic text-blue-600">imagination</span> instantly.
+    </h1>
+    <p class="text-slate-500 text-xl mb-12 max-w-2xl mx-auto font-medium">
+        The world's most advanced text-to-image platform for creators, designers, and brands. High-fidelity results in under 5 seconds.
+    </p>
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+        <a th:href="@{/studio}" class="btn-black px-10 py-5 rounded-2xl font-bold w-full sm:w-auto text-lg flex items-center justify-center gap-3">
+            Open Studio <i class="fas fa-arrow-right text-sm"></i>
+        </a>
+        <button class="bg-white border border-slate-200 px-10 py-5 rounded-2xl font-bold hover:bg-slate-50 transition-all w-full sm:w-auto text-lg shadow-sm">
+            View Gallery
+        </button>
+    </div>
+</section>
+
+<!-- Visual Centerpiece -->
+<section class="relative max-w-7xl mx-auto h-[750px] mt-10">
+    <!-- Central Mockup -->
+    <div class="absolute left-1/2 top-0 -translate-x-1/2 w-[340px] z-20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] rounded-[3.5rem] border-[10px] border-slate-900 overflow-hidden h-[620px] bg-slate-900">
+        <img src="https://images.pexels.com/photos/12969104/pexels-photo-12969104.jpeg" class="w-full h-full object-cover opacity-90" alt="App">
+        <div class="absolute bottom-0 w-full p-8 bg-gradient-to-t from-black via-black/40 to-transparent">
+            <div class="p-4 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20">
+                <p class="text-[10px] text-blue-300 font-bold uppercase tracking-tighter mb-1">Prompt Input</p>
+                <p class="text-xs text-white leading-relaxed">"Hyper-realistic portrait of a neo-tokyo cyborg, 8k, cinematic lighting..."</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Cards with Images -->
+    <!-- Card 1: Anime Style -->
+    <div class="absolute left-10 top-20 bg-white p-3 rounded-[2.5rem] w-64 shadow-2xl border border-slate-100 floating">
+        <img src="https://images.pexels.com/photos/29901348/pexels-photo-29901348.jpeg" class="w-full h-52 object-cover rounded-[2rem] mb-4" alt="Anime">
+        <div class="px-3 pb-2">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-[10px] font-bold text-slate-400 uppercase">Style: Anime</span>
+                <i class="fas fa-heart text-red-500 text-xs"></i>
+            </div>
+            <h4 class="font-bold text-sm">Neon Samurai v2</h4>
+        </div>
+    </div>
+
+    <!-- Card 2: 3D Render -->
+    <div class="absolute left-20 bottom-32 bg-[#FFD966] p-4 rounded-[2.5rem] w-60 shadow-2xl floating" style="animation-delay: 1.5s;">
+        <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=500&auto=format&fit=crop" class="w-full h-40 object-cover rounded-[1.8rem] mb-4 border-2 border-black/10" alt="3D">
+        <p class="text-xs font-black text-black uppercase tracking-widest text-center">3D CHARACTER GEN</p>
+    </div>
+
+    <!-- Card 3: Architecture -->
+    <div class="absolute right-10 top-40 bg-[#C1F1C1] p-3 rounded-[2.5rem] w-72 shadow-2xl floating" style="animation-delay: 0.5s;">
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=500&auto=format&fit=crop" class="w-full h-60 object-cover rounded-[2rem] mb-4" alt="Arch">
+        <div class="px-2 flex items-center justify-between">
+            <span class="text-sm font-bold text-black/70">Modern Villa Concept</span>
+            <span class="bg-white/50 px-3 py-1 rounded-full text-[10px] font-black uppercase">Exterior</span>
+        </div>
+    </div>
+
+    <!-- Card 4: Product -->
+    <div class="absolute right-20 bottom-40 bg-white p-3 rounded-[2.5rem] w-64 shadow-2xl border border-slate-100 floating" style="animation-delay: 2s;">
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop" class="w-full h-48 object-cover rounded-[2rem] mb-3" alt="Watch">
+        <div class="flex items-center gap-2 px-2">
+            <div class="flex -space-x-2">
+                <img src="https://ui-avatars.com/api/?name=A" class="w-5 h-5 rounded-full border border-white">
+                <img src="https://ui-avatars.com/api/?name=B" class="w-5 h-5 rounded-full border border-white">
+            </div>
+            <span class="text-[10px] font-bold text-slate-500">Liked by 1.2k creators</span>
+        </div>
+    </div>
+</section>
+
+<!-- Partners Section -->
+<section class="max-w-7xl mx-auto px-10 py-20 bg-slate-50/50 rounded-[4rem] mb-32">
+    <p class="text-center text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-12">Empowering teams at world-class studios</p>
+    <div class="flex flex-wrap justify-center items-center gap-16 md:gap-24">
+        <span class="trust-logo font-black text-3xl">ADOBE</span>
+        <span class="trust-logo font-black text-3xl italic">Figma</span>
+        <span class="trust-logo font-serif text-3xl font-bold italic">Vogue</span>
+        <span class="trust-logo font-bold text-3xl">NETFLIX</span>
+        <span class="trust-logo font-black text-3xl tracking-tighter">DISNEY</span>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="max-w-7xl mx-auto px-10 mb-32">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="p-10 rounded-[3rem] feature-card bg-slate-50">
+            <div class="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center text-white text-xl mb-8 shadow-lg shadow-blue-200">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">Instant Processing</h3>
+            <p class="text-slate-500 leading-relaxed">Our multi-GPU cloud infrastructure generates 4K images in less than 5 seconds. No more waiting.</p>
+        </div>
+        <div class="p-10 rounded-[3rem] feature-card bg-slate-50">
+            <div class="w-14 h-14 rounded-2xl bg-red-500 flex items-center justify-center text-white text-xl mb-8 shadow-lg shadow-red-200">
+                <i class="fas fa-layer-group"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">Multi-Model Studio</h3>
+            <p class="text-slate-500 leading-relaxed">Switch between Flux, Stable Diffusion XL, and DALL-E 3 instantly to find your perfect style.</p>
+        </div>
+        <div class="p-10 rounded-[3rem] feature-card bg-slate-50">
+            <div class="w-14 h-14 rounded-2xl bg-green-500 flex items-center justify-center text-white text-xl mb-8 shadow-lg shadow-green-200">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-4">Copyright Friendly</h3>
+            <p class="text-slate-500 leading-relaxed">Every image generated on Nexus AI is commercially licensed for your business and social media use.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery Grid -->
+<section id="gallery" class="max-w-7xl mx-auto px-10 mb-32">
+    <div class="flex justify-between items-end mb-16">
+        <div>
+            <h2 class="text-5xl serif mb-4">Community Showcase</h2>
+            <p class="text-slate-500">Explore what other creators are building today.</p>
+        </div>
+        <button class="btn-black px-8 py-3 rounded-xl text-sm font-bold">Explore All</button>
+    </div>
+
+    <div class="columns-1 md:columns-2 lg:columns-3 gap-6">
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1614728263952-84ea206f99b6?w=600" class="w-full"></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1633167606207-d840b5070fc2?w=600" class="w-full"></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=600" class="w-full"></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600" class="w-full"></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1605142859862-978be7eba909?w=600" class="w-full"></div>
+        <div class="gallery-item"><img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=600" class="w-full"></div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="max-w-7xl mx-auto px-6 mb-20">
+    <div class="relative rounded-[4rem] overflow-hidden bg-black py-24 px-10 text-center text-white">
+        <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+        <div class="absolute top-0 left-0 w-full h-2" style="background: var(--google-gradient)"></div>
+
+        <h2 class="text-5xl md:text-6xl serif mb-8 relative z-10">Ready to create <br> the future?</h2>
+        <p class="text-slate-400 mb-12 text-xl relative z-10">Join 50,000+ creators and start your 7-day free trial.</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+            <a th:href="@{/register}" class="bg-white text-black px-12 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition-all">Claim Free Credits</a>
+        </div>
+    </div>
+</section>
+
+<footer class="py-10 text-center border-t border-slate-100 text-slate-400 text-xs font-bold uppercase tracking-widest">
+    &copy; 2024 Nexus AI Studio &bull; Built with Spring Boot 3.2
+</footer>
+
+<script>
+    // Three.js Neural Network Background Logic
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+    const geometry = new THREE.BufferGeometry();
+    const vertices = [];
+    for (let i = 0; i < 1500; i++) {
+        vertices.push(THREE.MathUtils.randFloatSpread(2000), THREE.MathUtils.randFloatSpread(2000), THREE.MathUtils.randFloatSpread(2000));
+    }
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    const particles = new THREE.Points(geometry, new THREE.PointsMaterial({ color: 0x4285F4, size: 2 }));
+    scene.add(particles);
+
+    camera.position.z = 1000;
+
+    function animate() {
+        requestAnimationFrame(animate);
+        particles.rotation.x += 0.0005;
+        particles.rotation.y += 0.0005;
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+</script>
+</body>
+</html>
