@@ -39,6 +39,85 @@
 
         .gallery-item { position: relative; border-radius: 20px; overflow: hidden; break-inside: avoid; margin-bottom: 1.5rem; }
     </style>
+
+    <style>
+        /* --- Responsive Fixes --- */
+
+        /* General Scaling for smaller screens */
+        @media (max-width: 1024px) {
+            h1 { font-size: 4rem !important; line-height: 1.1 !important; }
+            .max-w-7xl { padding-left: 1.5rem; padding-right: 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem !important; }
+            p.text-xl { font-size: 1.1rem !important; margin-bottom: 2rem !important; }
+
+            /* Adjusting Navigation for small screens without omitting items */
+            nav .px-10 { px-4 !important; }
+            nav .gap-10 { gap: 1rem !important; font-size: 11px !important; }
+            nav .text-xl { font-size: 1rem !important; }
+
+            /* Shrink feature cards padding */
+            .feature-card { padding: 1.5rem !important; border-radius: 1.5rem !important; }
+            .feature-card h3 { font-size: 1.25rem !important; }
+
+            /* Shrink Partners logos */
+            .trust-logo { height: 16px !important; font-size: 1.2rem !important; }
+        }
+
+        /* THE VISUAL CENTERPIECE SCALING LOGIC
+           This ensures the phone and ALL 4 floating cards shrink
+           to fit the screen width instead of overlapping or disappearing. */
+
+        @media (max-width: 1200px) {
+            section.h-\[750px\] {
+                height: auto !important;
+                min-height: 600px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transform: scale(0.85);
+                transform-origin: center top;
+                margin-bottom: -100px; /* Offset for the scale */
+            }
+        }
+
+        @media (max-width: 768px) {
+            section.h-\[750px\] {
+                transform: scale(0.6);
+                margin-bottom: -250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section.h-\[750px\] {
+                transform: scale(0.42); /* Extreme shrink for small phones */
+                margin-bottom: -400px;
+            }
+
+            /* Adjusting Hero text even further */
+            h1 { font-size: 2.5rem !important; }
+
+            /* Final CTA adjustment */
+            .py-24 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+            .py-24 h2 { font-size: 2.5rem !important; }
+        }
+
+        /* Ensure floating cards don't use fixed pixel offsets that break on tiny screens */
+        @media (max-width: 640px) {
+            .absolute.left-10 { left: -5% !important; }
+            .absolute.right-10 { right: -5% !important; }
+            .absolute.left-20 { left: 0% !important; }
+            .absolute.right-20 { right: 0% !important; }
+        }
+
+        /* Prevent horizontal scroll */
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+    </style>
 </head>
 <body class="overflow-x-hidden">
 

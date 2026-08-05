@@ -8,6 +8,78 @@
         .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .blob { position: absolute; width: 400px; height: 400px; background: rgba(59, 130, 246, 0.2); filter: blur(80px); border-radius: 50%; z-index: -1; }
     </style>
+
+    <style>
+        /* Base Styles */
+        body {
+            background: #05070a;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(59, 130, 246, 0.2);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        /* --- Responsive Scaling --- */
+
+        /* For Tablets and smaller laptops */
+        @media (max-width: 1024px) {
+            .blob { width: 300px; height: 300px; }
+        }
+
+        /* For Mobile Phones (Max-width 640px) */
+        @media (max-width: 640px) {
+            body {
+                overflow-y: auto; /* Allow scrolling on small phones so nothing is cut off */
+                padding: 1rem;
+                align-items: flex-start; /* Better for small screens when keyboard pops up */
+            }
+
+            .glass {
+                padding: 1.5rem !important; /* Reduce padding to save space */
+                margin-top: 2rem;
+                margin-bottom: 2rem;
+                width: 100% !important;
+            }
+
+            h1 { font-size: 1.5rem !important; } /* Shrink Title */
+            .text-slate-400 { font-size: 0.875rem !important; }
+
+            /* Shrink input fields and buttons slightly */
+            input { padding: 0.6rem 1rem !important; font-size: 0.9rem !important; }
+            button { py: 0.75rem !important; font-size: 0.95rem !important; }
+
+            /* Smaller Blobs so they don't cover everything */
+            .blob { width: 200px; height: 200px; filter: blur(50px); }
+
+            .mb-8 { margin-bottom: 1.5rem !important; }
+            .mt-8 { margin-top: 1.5rem !important; }
+        }
+
+        /* Very small screens (e.g., iPhone SE) */
+        @media (max-height: 700px) {
+            body { align-items: flex-start; }
+            .glass { padding: 1.25rem !important; }
+            .space-y-6 { space-y: 4 !important; } /* Reduce gap between inputs */
+            .mb-8 { margin-bottom: 1rem !important; }
+        }
+    </style>
+
 </head>
 <body class="h-screen flex items-center justify-center p-6">
 <div class="blob top-0 left-0"></div>

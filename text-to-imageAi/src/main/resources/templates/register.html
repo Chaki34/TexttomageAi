@@ -8,6 +8,86 @@
         .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .blob { position: absolute; width: 400px; height: 400px; background: rgba(37, 99, 235, 0.15); filter: blur(80px); border-radius: 50%; z-index: -1; }
     </style>
+
+    <style>
+        /* Base Styles */
+        body {
+            background: #05070a;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Use min-height instead of h-screen for better mobile support */
+        }
+
+        /* Allow scrolling on mobile so the keyboard doesn't hide the fields */
+        @media (max-width: 640px) {
+            body {
+                overflow-y: auto;
+                padding: 1rem;
+                align-items: flex-start; /* Better when keyboard is active */
+            }
+        }
+
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .blob {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(37, 99, 235, 0.15);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        /* --- Responsive Adjustments --- */
+
+        @media (max-width: 768px) {
+            .glass {
+                padding: 1.5rem !important; /* Reduce inner padding to save space */
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .text-center.mb-8 { margin-bottom: 1.5rem !important; } /* Tighten header gap */
+
+            h1 { font-size: 1.75rem !important; } /* Shrink title slightly */
+
+            /* Shrink input fields slightly for smaller height */
+            input {
+                padding-top: 0.65rem !important;
+                padding-bottom: 0.65rem !important;
+                font-size: 0.9rem !important;
+            }
+
+            label { font-size: 0.8rem !important; margin-bottom: 0.25rem !important; }
+
+            .space-y-5 { space-y: 3 !important; } /* Reduce gap between form elements */
+
+            .blob { width: 250px; height: 250px; filter: blur(60px); }
+        }
+
+        /* Handling landscape mode or ultra-small height phones */
+        @media (max-height: 750px) {
+            .glass { padding: 1.25rem !important; }
+            .mb-8 { margin-bottom: 1rem !important; }
+            .mt-8 { margin-top: 1rem !important; }
+            .space-y-5 > * + * { margin-top: 0.75rem !important; }
+        }
+
+        /* Prevent horizontal scroll */
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+    </style>
+
 </head>
 <body class="h-screen flex items-center justify-center p-6">
 <div class="blob top-10 right-10"></div>
